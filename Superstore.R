@@ -1,4 +1,5 @@
 # this comment is to test github
+# this is for ray
 # Load the dataset
 superstore_df <- read.csv(file.choose())
 
