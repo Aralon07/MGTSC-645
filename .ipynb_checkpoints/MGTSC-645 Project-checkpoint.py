@@ -7,11 +7,8 @@
 
 import pandas as pd
 
-import os  # **Import os to work with environment variables**
-
-# **Get the file path from the DATA_PATH environment variable**
-**data_path = os.getenv("DATA_PATH", "/Users/raylu/Desktop/Courses/MGTSC\ 645/FInal\ Project /Users/raylu/Desktop/Courses/MGTSC\ 645/FInal\ Project")**  # Adjust default path if needed
-**file_path = os.path.join(data_path, "superstore.csv")**
+# File path - Modify this based on your local setup
+file_path = r"D:\MBA\SEM 4\MGTSC 645\Project\Sample - Superstore.csv (1)\superstore.csv"
 
 # Load the dataset
 df = pd.read_csv(file_path, encoding='latin1')
