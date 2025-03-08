@@ -142,9 +142,11 @@ ggplot(profit_data, aes(x = Discount.Binned, y = Profit, fill = Segment)) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
-
 # Product - level analysis
 aggregate(Sales ~ Sub.Category + Discount.Binned, data = superstore_df, FUN = sum)
+
+# Save the modified dataset to a new CSV file
+write.csv(superstore_df, "superstore_modified.csv", row.names = FALSE)
 
 # Sales and profit outliers
 boxplot(superstore_df$Sales, main = "Sales Outliers")
