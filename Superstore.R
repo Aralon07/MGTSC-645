@@ -1,3 +1,4 @@
+
 # Load the dataset
 superstore_df <- read.csv(file.choose())
 
@@ -387,4 +388,3 @@ print(cor_matrix)
 
 # Create a correlation heatmap
 corrplot(cor_matrix, method = "color", type = "lower", tl.col = "black", tl.srt = 45)
-
