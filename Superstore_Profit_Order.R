@@ -129,6 +129,10 @@ summary(lm_profit_model)
 
 stepwise_model <- step(lm_profit_model, direction = "both", trace = 1)
 summary(stepwise_model)
+vif(stepwise_model)
+# Q-Q Plot for Residuals
+qqnorm(residuals(stepwise_model))  # Create Q-Q plot
+qqline(residuals(stepwise_model), col = "red", lwd = 2)
 
 
 # Three-way interaction between Sales, Region, and Discount
@@ -159,6 +163,47 @@ lm_model_three_way <- lm(Profit ~ Sales * Region * Discount* Quantity,
                          data = superstore_df)
 
 summary(lm_model_three_way)
+
+# Extract residuals and fitted values
+residuals_df <- data.frame(
+  Fitted = fitted(lm_model_three_way),
+  Residuals = residuals(lm_model_three_way)
+)
+
+# 1. Residuals vs. Fitted Plot
+ggplot(residuals_df, aes(x = Fitted, y = Residuals)) +
+  geom_point(alpha = 0.5, color = "blue") +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "red") +
+  labs(title = "Residuals vs. Fitted Values",
+       x = "Fitted Values",
+       y = "Residuals") +
+  theme_minimal()
+
+# 2. Histogram of Residuals
+ggplot(residuals_df, aes(x = Residuals)) +
+  geom_histogram(binwidth = 10, fill = "blue", color = "black", alpha = 0.7) +
+  labs(title = "Histogram of Residuals", x = "Residuals", y = "Frequency") +
+  theme_minimal()
+
+# 3. Q-Q Plot (Normality Check)
+qqnorm(residuals_df$Residuals, main = "Q-Q Plot of Residuals")
+qqline(residuals_df$Residuals, col = "red")
+
+plot(lm_model_three_way$fitted.values, sqrt(abs(residuals(lm_model_three_way))), 
+     main = "Scale-Location Plot",
+     xlab = "Fitted Values", 
+     ylab = "√|Residuals|")
+abline(h = 0, col = "red")
+
+library(lmtest)
+dwtest(lm_model_three_way)
+
+library(car)
+vif(lm_model_three_way)
+
+
+
+
 
 # Model with decided interaction terms
 model_interaction <- lm(Profit ~ Sales + Quantity + Discount + Region + Category +
